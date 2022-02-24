@@ -8,23 +8,30 @@
   ],
   "joins": [
     {
-        "type": "INNER",
-        "table": "address",
-        "condition": {
-          "operator": "equal",
-          "right": { "name": "id", "table": "employee" },
-          "left": { "name": "employee_id", "table": "address"}
-          }
-      },
-      {
-        "type": "INNER",
-        "table": "country",
-        "condition": { 
-            "operator": "equal",
-            "right": { "name": "country_code", "table": "address" },
-            "left": { "name": "code", "table": "country"}
-          }
-        }
+      "type": "INNER",
+      "table": "address",
+      "condition": {
+        "operator": "equal",
+        "right": { "name": "id", "table": "employee" },
+        "left": { "name": "employee_id", "table": "address" }
+      }
+    },
+    {
+      "type": "INNER",
+      "table": "country",
+      "condition": {
+        "operator": "equal",
+        "right": { "name": "country_code", "table": "address" },
+        "left": { "name": "code", "table": "country" }
+      }
+    }
   ],
-  "where": {"operator":"in","fieldName":{"table":"employee", "name":"name"},"fieldValue":{"table":"employee","columns": [{"name": "name", "table": "employee"}]}}
+  "where": {
+    "operator": "in",
+    "fieldName": { "table": "employee", "name": "name" },
+    "fieldValue": {
+      "table": "employee",
+      "columns": [{ "name": "name", "table": "employee" }]
+    }
+  }
 }
