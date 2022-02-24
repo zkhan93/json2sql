@@ -5,19 +5,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.peerislands.input.BaseParser;
-import com.peerislands.input.JSONparser;
-import com.peerislands.schema.SQLBase;
+import com.peerislands.parser.error.InvalidInputException;
+import com.peerislands.parser.json.SelectParser;
+import com.peerislands.schema.SelectQuery;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SQLBuilder {
     private String rawContent;
-    
-    private BaseParser parser;
+    private String type;
 
-    public SQLBuilder from(String inputFormat){
-        if(inputFormat.trim().toLowerCase().equals("json")){
-            this.parser = new JSONparser();
-        }
+    public SQLBuilder type(String inputFormat){
+        this.type = inputFormat.trim().toLowerCase();
         return this;
     }
     
@@ -35,14 +35,25 @@ public class SQLBuilder {
             System.err.println(String.format("Unable to Open file {}", filename));
         }
         this.rawContent = strb.toString();
-        if(this.rawContent.length() > 0)
-            this.parser.parse(this.rawContent);
         return this;
     }
 
     
     public String build(){
-        SQLBase sql = this.parser.build();
-        return sql.sql();
+        String res = "";
+        if(type.equals("json")){
+            try{
+                JSONObject root = new JSONObject(this.rawContent);
+                SelectQuery select = new SelectParser().parse(root);
+                res = select.sql();
+            }catch (JSONException e){
+                System.err.println("Error parsing content to JSON");
+                e.printStackTrace();
+            }catch(InvalidInputException e){
+                e.printStackTrace();
+                System.err.println("Error converting to JSON to SQL");
+            }
+        }
+        return res;
     }
 }

@@ -8,12 +8,14 @@ import com.peerislands.utils.StringUtils;
 public class SelectQuery implements SQLBase{
     String table;
     List<Column> columns;
-    WhereClauseWrapper where;
+    ConditionWrapper where;
+    List<Join> joins;
 
-    public SelectQuery(String table, List<Column> columns, WhereClauseWrapper where){
+    public SelectQuery(String table, List<Column> columns, List<Join> joins, ConditionWrapper where){
         this.table = table;
         this.columns = columns;
         this.where = where;
+        this.joins = joins;
     }
 
     public String sql() {
@@ -36,7 +38,16 @@ public class SelectQuery implements SQLBase{
         strb.append("FROM");
         strb.append(' ');
         strb.append(this.table);
-        strb.append(' ');
+        if(joins != null){
+            strb.append(' ');
+            Join join;
+            for(int i=0;i<joins.size();i++){
+                join = joins.get(i);
+                strb.append('\n');
+                strb.append(join.sql());
+                strb.append(' ');
+            }
+        }
         if(where!=null){
             strb.append("WHERE");
             strb.append(' ');

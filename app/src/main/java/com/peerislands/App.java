@@ -9,7 +9,7 @@ public class App {
         // based on the type of input call the correct parser
         
         String filename = args[0];
-        String sql =  new SQLBuilder().from("json").read(filename).build();
+        String sql =  new SQLBuilder().read(filename).type("json").build();
         System.out.println(sql);
     }
 

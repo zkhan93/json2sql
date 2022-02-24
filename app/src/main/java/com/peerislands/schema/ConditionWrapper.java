@@ -1,14 +1,14 @@
 package com.peerislands.schema;
 
-public class WhereClauseWrapper implements SQLBase{
-    private WhereClause<?> whereClause;
-    private WhereClauseSet whereClauseSet;
+public class ConditionWrapper implements SQLBase{
+    private Condition<?> whereClause;
+    private ConditionSet whereClauseSet;
 
-    public WhereClauseWrapper(WhereClauseSet whereClauseSet){
+    public ConditionWrapper(ConditionSet whereClauseSet){
         this.whereClauseSet = whereClauseSet;
     }
 
-    public WhereClauseWrapper(WhereClause<?> whereClause){
+    public ConditionWrapper(Condition<?> whereClause){
         this.whereClause = whereClause;
     }
 

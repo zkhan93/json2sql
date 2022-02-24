@@ -8,14 +8,14 @@ import java.util.List;
 
 import com.peerislands.schema.error.InvalidValueException;
 
-public abstract class WhereClause<T> implements SQLBase {
+public abstract class Condition<T> implements SQLBase {
     List<Class<?>> primitiveTypes = Arrays.asList(Integer.class, String.class, BigDecimal.class);
 
     Column column;
     String operator;
     String value;
 
-    public WhereClause(Column column, String opSymbol, T value) throws InvalidValueException {
+    public Condition(Column column, String opSymbol, T value) throws InvalidValueException {
         this.column = column;
         this.operator = opSymbol;
         validate(value);
@@ -39,7 +39,7 @@ public abstract class WhereClause<T> implements SQLBase {
 
     void validatePrimitiveValues(Object value) throws InvalidValueException{
         if (!primitiveTypes.contains(value.getClass())) {
-            throw new InvalidValueException(String.format("Invalid value type for %s", operator));
+            throw new InvalidValueException(String.format("%s is an invalid value type for %s", value.getClass(), operator));
         }
     }
 }

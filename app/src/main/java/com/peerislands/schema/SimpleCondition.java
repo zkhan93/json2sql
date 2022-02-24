@@ -7,10 +7,10 @@ import com.peerislands.schema.error.InvalidValueException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-public class SimpleWhereClause extends WhereClause<Object> {
+public class SimpleCondition extends Condition<Object> {
     List<Class<?>> simpleTypes = Arrays.asList(Integer.class, String.class, BigDecimal.class);
 
-    public SimpleWhereClause(Column column, String opSymbol, Object value) throws InvalidValueException {
+    public SimpleCondition(Column column, String opSymbol, Object value) throws InvalidValueException {
         super(column, opSymbol, value);
     }
 

@@ -1,4 +1,4 @@
-package com.peerislands.input.error;
+package com.peerislands.parser.error;
 
 public class InvalidInputException  extends Exception{
 

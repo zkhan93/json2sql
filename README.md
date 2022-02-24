@@ -1,3 +1,9 @@
+## Sample Executions for Solution2
+
+Case demonstrating joins and inner query
+
+contents of input.json
+```json
 {
   "table": "employee",
   "columns": [
@@ -28,3 +34,13 @@
   ],
   "where": {"operator":"in","fieldName":{"table":"employee", "name":"name"},"fieldValue":{"table":"employee","columns": [{"name": "name", "table": "employee"}]}}
 }
+
+```
+```bash
+$ java -jar app/build/libs/app.jar input.json
+```
+```sql
+SELECT employee.name, employee.age, country.country_name, address.city FROM employee 
+INNER JOIN address ON employee.id = address.employee_id 
+INNER JOIN country ON address.country_code = country.code WHERE employee.name IN (SELECT employee.name FROM employee)
+```

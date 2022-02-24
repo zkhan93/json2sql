@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.peerislands.schema.error.InvalidValueException;
 
-public class BetweenWhereClause extends WhereClause<ArrayList<Object>>{
-    public BetweenWhereClause(Column column, String operatorName, ArrayList<Object> value) throws InvalidValueException {
+public class BetweenCondition extends Condition<ArrayList<Object>>{
+    public BetweenCondition(Column column, String operatorName, ArrayList<Object> value) throws InvalidValueException {
         super(column, operatorName, value);
     }
     

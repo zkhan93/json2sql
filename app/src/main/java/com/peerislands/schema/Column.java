@@ -9,7 +9,7 @@ public class Column implements SQLBase {
         this.table = null;
     }
 
-    Column(String table, String name) {
+    public Column(String table, String name) {
         this.table = table;
         this.name = name;
     }
