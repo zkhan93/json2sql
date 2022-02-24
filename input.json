@@ -1,55 +1,68 @@
 [
-
-    {
-        "table": "employee",
-        "columns":["name", "age", "type"],
-        "where": {"operator":"equal","fieldName":"name","fieldValue":"Zeeshan"}
-    
-    },
-
-    {
+  {
     "table": "employee",
-    "columns":["name", "age", "type"],
-    "where": {"operator":"IN","fieldName":"name","fieldValue":["Zeeshan", "Rohit", "Vyom"]}
-
-    },
-
-    {
-    "table": "employee",
-    "columns":["name", "age", "type"],
+    "columns": ["name", "age", "type"],
     "where": {
-        "or": [
-            {"operator":"LTE","fieldName":"age","fieldValue":29},
-            {"operator":"GTE","fieldName":"age","fieldValue":40} 
-        ]
+      "operator": "equal",
+      "fieldName": "name",
+      "fieldValue": "Zeeshan"
     }
-},
-{
+  },
+
+  {
     "table": "employee",
-    "columns":["name", "age", "type"],
+    "columns": ["name", "age", "type"],
     "where": {
-        "and": [
-            {"operator":"IN","fieldName":"name","fieldValue":["Zeeshan", "Rohit", "Vyom"]},
-            {"operator":"LTE","fieldName":"age","fieldValue":29},
-            {"operator":"GTE","fieldName":"age","fieldValue":40} 
-        ]
+      "operator": "IN",
+      "fieldName": "name",
+      "fieldValue": ["Zeeshan", "Rohit", "Vyom"]
     }
-},
-{
+  },
+
+  {
     "table": "employee",
-    "columns":["name", "age", "type"],
+    "columns": ["name", "age", "type"],
     "where": {
-        "and": [
-            {"operator":"like","fieldName":"name","fieldValue":"Zee%"},
-            {"operator":"IN","fieldName":"name","fieldValue":["Zeeshan", "Rohit", "Vyom"]},
-            {"operator":"between","fieldName":"age","fieldValue":[29, 40]},
-            {
-                "or": [
-                        {"operator":"LTE","fieldName":"age","fieldValue":29},
-                        {"operator":"GTE","fieldName":"age","fieldValue":40}
-                    ]
-            }
-        ]
+      "or": [
+        { "operator": "LTE", "fieldName": "age", "fieldValue": 29 },
+        { "operator": "GTE", "fieldName": "age", "fieldValue": 40 }
+      ]
     }
-}
+  },
+  {
+    "table": "employee",
+    "columns": ["name", "age", "type"],
+    "where": {
+      "and": [
+        {
+          "operator": "IN",
+          "fieldName": "name",
+          "fieldValue": ["Zeeshan", "Rohit", "Vyom"]
+        },
+        { "operator": "LTE", "fieldName": "age", "fieldValue": 29 },
+        { "operator": "GTE", "fieldName": "age", "fieldValue": 40 }
+      ]
+    }
+  },
+  {
+    "table": "employee",
+    "columns": ["name", "age", "type"],
+    "where": {
+      "and": [
+        { "operator": "like", "fieldName": "name", "fieldValue": "Zee%" },
+        {
+          "operator": "IN",
+          "fieldName": "name",
+          "fieldValue": ["Zeeshan", "Rohit", "Vyom"]
+        },
+        { "operator": "between", "fieldName": "age", "fieldValue": [29, 40] },
+        {
+          "or": [
+            { "operator": "LTE", "fieldName": "age", "fieldValue": 29 },
+            { "operator": "GTE", "fieldName": "age", "fieldValue": 40 }
+          ]
+        }
+      ]
+    }
+  }
 ]
