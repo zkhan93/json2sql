@@ -1,5 +1,5 @@
 {
-  "table": "employee",
+  "tablwe": "employee",
   "columns": [
     { "name": "name", "table": "employee" },
     { "name": "age", "table": "employee" },

@@ -46,10 +46,12 @@ public class SelectQuery implements SQLBase{
                 join = joins.get(i);
                 strb.append('\n');
                 strb.append(join.sql(dialect));
-                strb.append(' ');
+                if(i < joins.size() - 1)
+                    strb.append(' ');
             }
         }
         if(where!=null){
+            strb.append(' ');
             strb.append("WHERE");
             strb.append(' ');
             strb.append(where.sql(dialect));

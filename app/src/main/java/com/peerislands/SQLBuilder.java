@@ -30,39 +30,37 @@ public class SQLBuilder {
         return this;
     }
     
-    public SQLBuilder read(String filename){
+    public SQLBuilder read(String filename) throws IOException{
         StringBuilder strb = new StringBuilder();
         String line = null;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(filename)));
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(new FileReader(new File(filename)));
             do {
                 line = br.readLine();
                 if (line != null)
                     strb.append(line);
             } while (line != null);
-        } catch (IOException e) {
-            System.err.println(String.format("Unable to Open file {}", filename));
+        } finally{
+            if(br != null)
+                br.close();
         }
+    
         this.rawContent = strb.toString();
         return this;
     }
-
     
-    public String build(){
+    public String build() throws JSONException, InvalidInputException{
         String res = "";
         if(type.equals("json")){
-            try{
-                JSONObject root = new JSONObject(rawContent);
-                SelectQuery select = new SelectParser().parse(root);
-                res = select.sql(dialect);
-            }catch (JSONException e){
-                System.err.println("Error parsing content to JSON");
-                e.printStackTrace();
-            }catch(InvalidInputException e){
-                e.printStackTrace();
-                System.err.println("Error converting to JSON to SQL");
-            }
+            JSONObject root = new JSONObject(rawContent);
+            SelectQuery select = new SelectParser().parse(root);
+            res = select.sql(dialect);
         }
         return res;
+    }
+
+    public String getRawContent(){
+        return rawContent;
     }
 }

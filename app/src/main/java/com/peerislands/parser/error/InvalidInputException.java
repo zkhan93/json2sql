@@ -1,6 +1,8 @@
 package com.peerislands.parser.error;
 
-public class InvalidInputException  extends Exception{
+import org.json.JSONException;
+
+public class InvalidInputException extends JSONException{
 
     public InvalidInputException(String msg) {
         super(msg);

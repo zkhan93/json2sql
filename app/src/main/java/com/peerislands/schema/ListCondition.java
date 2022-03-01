@@ -33,12 +33,11 @@ public class ListCondition extends Condition<ArrayList<Object>> {
 
     @Override
     void validate(ArrayList<Object> values) throws InvalidValueException {
-
         Object val;
         for (int i = 0; i < values.size(); i++) {
             val = values.get(i);
             if (!primitiveTypes.contains(val.getClass()) && !(val instanceof SQLBase)) {
-                throw new InvalidValueException(String.format("Invalid value type for %s", operator.getName()));
+                throw new InvalidValueException(String.format("Invalid type %s for operator '%s'", val.getClass().getName(), operator.getName()));
             }
         }
     };

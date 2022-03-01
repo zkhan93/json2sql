@@ -4,6 +4,8 @@ import com.peerislands.dialect.error.InvalidDialectException;
 
 public class DialectFactory {
     public static Dialect get(String name) throws InvalidDialectException{
+        if(name == null)
+            throw new InvalidDialectException(name);
         name = name.trim().toLowerCase();
         Dialect dialect = null;
         if(name.equals("mysql")){
