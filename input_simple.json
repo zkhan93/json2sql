@@ -1,5 +1,5 @@
 {
-  "tablwe": "employee",
+  "table": "employee",
   "columns": [
     { "name": "name", "table": "employee" },
     { "name": "age", "table": "employee" },
@@ -48,5 +48,4 @@
       }
     ]
   }
-  
 }
