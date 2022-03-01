@@ -1,16 +1,17 @@
 package com.peerislands.schema;
 
+import com.peerislands.dialect.Dialect;
 import com.peerislands.schema.error.InvalidValueException;
 
 public class JoinCondition extends Condition<Column>{
 
-    public JoinCondition(Column column, String opSymbol, Column value) throws InvalidValueException {
-        super(column, opSymbol, value);
+    public JoinCondition(Column column, Operator op, Column value) throws InvalidValueException {
+        super(column, op, value);
     }
 
     @Override
-    String parseValue(Column value) {
-        return value.sql();
+    String parseValue(Dialect dialect, Column value) {
+        return value.sql(dialect);
     }
 
     @Override

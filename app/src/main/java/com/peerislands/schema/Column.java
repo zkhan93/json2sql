@@ -1,5 +1,7 @@
 package com.peerislands.schema;
 
+import com.peerislands.dialect.Dialect;
+
 public class Column implements SQLBase {
     String table;
     String name;
@@ -15,7 +17,7 @@ public class Column implements SQLBase {
     }
 
     @Override
-    public String sql() {
+    public String sql(Dialect dialect) {
         return table == null ? name : table + "." + name;
     }
 

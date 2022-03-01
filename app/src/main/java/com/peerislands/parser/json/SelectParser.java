@@ -13,7 +13,7 @@ import com.peerislands.schema.Join;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SelectParser implements BaseParser<JSONObject>{
+public class SelectParser implements BaseParser<JSONObject, SelectQuery>{
 
     public SelectQuery parse(JSONObject json) throws InvalidInputException {
 
@@ -24,12 +24,12 @@ public class SelectParser implements BaseParser<JSONObject>{
 
         JSONArray jsonColumns = json.optJSONArray("columns");
         if (jsonColumns != null)
-            columns = new ColumnParser().parse(jsonColumns);
+            columns = new ColumnParser().parseMany(jsonColumns);
 
         JSONArray jsonJoins = json.optJSONArray("joins");
 
         if (jsonJoins != null)
-            joins = new JoinParser().parse(jsonJoins);
+            joins = new JoinParser().parseMany(jsonJoins);
 
         JSONObject where = json.optJSONObject("where");
         if (where != null)

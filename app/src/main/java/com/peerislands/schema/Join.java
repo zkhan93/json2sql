@@ -3,6 +3,7 @@ package com.peerislands.schema;
 import java.util.Arrays;
 import java.util.List;
 
+import com.peerislands.dialect.Dialect;
 import com.peerislands.schema.error.InvalidConditionJoinOpException;
 import com.peerislands.schema.error.InvalidJoinTypeException;
 
@@ -30,7 +31,7 @@ public class Join implements SQLBase{
     }
 
     @Override
-    public String sql() {
+    public String sql(Dialect dialect) {
         StringBuilder strb = new StringBuilder();
         strb.append(type);
         strb.append(' ');
@@ -40,7 +41,7 @@ public class Join implements SQLBase{
         strb.append(' ');
         strb.append("ON");
         strb.append(' ');
-        strb.append(condition.sql());
+        strb.append(condition.sql(dialect));
         return strb.toString();
     }
     

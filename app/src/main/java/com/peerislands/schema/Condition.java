@@ -1,38 +1,37 @@
 package com.peerislands.schema;
 
-
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import com.peerislands.dialect.Dialect;
 import com.peerislands.schema.error.InvalidValueException;
 
 public abstract class Condition<T> implements SQLBase {
     List<Class<?>> primitiveTypes = Arrays.asList(Integer.class, String.class, BigDecimal.class);
 
     Column column;
-    String operator;
-    String value;
+    Operator operator;
+    T value;
 
-    public Condition(Column column, String opSymbol, T value) throws InvalidValueException {
+    public Condition(Column column, Operator op, T value) throws InvalidValueException {
         this.column = column;
-        this.operator = opSymbol;
+        this.operator = op;
         validate(value);
-        this.value = parseValue(value);
+        this.value = value;
     }
 
-    abstract String parseValue(T value);
+    abstract String parseValue(Dialect dialect, T value);
         
     abstract void validate(T value) throws InvalidValueException;
 
-    public String sql() {
-        return column.sql() + " " + operator + " " + value;
+    public String sql(Dialect dialect) {
+        return column.sql(dialect) + " " + operator.sql(dialect) + " " + parseValue(dialect, value);
     }
 
-    String parseSimpleValue(Object value){
+    String parseSimpleValue(Dialect dialect, Object value){
         if (value instanceof String)
-            return "\"" + value.toString() + "\"";
+            return dialect.getQuoteChar() + value.toString() + dialect.getQuoteChar();
         else
             return value.toString();
     }

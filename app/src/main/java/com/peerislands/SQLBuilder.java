@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.peerislands.dialect.Dialect;
+import com.peerislands.dialect.DialectFactory;
+import com.peerislands.dialect.error.InvalidDialectException;
 import com.peerislands.parser.error.InvalidInputException;
 import com.peerislands.parser.json.SelectParser;
 import com.peerislands.schema.SelectQuery;
@@ -15,9 +18,15 @@ import org.json.JSONObject;
 public class SQLBuilder {
     private String rawContent;
     private String type;
+    private Dialect dialect;
 
     public SQLBuilder type(String inputFormat){
         this.type = inputFormat.trim().toLowerCase();
+        return this;
+    }
+
+    public SQLBuilder dialect(String dialect) throws InvalidDialectException{
+        this.dialect = DialectFactory.get(dialect);
         return this;
     }
     
@@ -43,9 +52,9 @@ public class SQLBuilder {
         String res = "";
         if(type.equals("json")){
             try{
-                JSONObject root = new JSONObject(this.rawContent);
+                JSONObject root = new JSONObject(rawContent);
                 SelectQuery select = new SelectParser().parse(root);
-                res = select.sql();
+                res = select.sql(dialect);
             }catch (JSONException e){
                 System.err.println("Error parsing content to JSON");
                 e.printStackTrace();

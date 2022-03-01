@@ -3,6 +3,8 @@ package com.peerislands.parser.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.peerislands.parser.BaseParser;
+import com.peerislands.parser.ListParser;
 import com.peerislands.parser.error.InvalidConditionException;
 import com.peerislands.parser.error.InvalidInputException;
 import com.peerislands.schema.Column;
@@ -19,8 +21,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JoinParser {
-    public List<Join> parse(JSONArray items) throws InvalidInputException {
+public class JoinParser implements BaseParser<JSONObject, Join>, ListParser<JSONArray, Join>{
+
+    public List<Join> parseMany(JSONArray items) throws InvalidInputException {
         List<Join> joins = new ArrayList<>();
         JSONObject item;
         for (int i = 0; i < items.length(); i++) {

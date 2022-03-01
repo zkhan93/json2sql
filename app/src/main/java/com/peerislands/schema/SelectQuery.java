@@ -3,6 +3,7 @@ package com.peerislands.schema;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.peerislands.dialect.Dialect;
 import com.peerislands.utils.StringUtils;
 
 public class SelectQuery implements SQLBase{
@@ -18,7 +19,7 @@ public class SelectQuery implements SQLBase{
         this.joins = joins;
     }
 
-    public String sql() {
+    public String sql(Dialect dialect) {
 
         StringBuffer strb = new StringBuffer();
 
@@ -28,7 +29,7 @@ public class SelectQuery implements SQLBase{
         if(columns != null){
             List<String> strColumns = new ArrayList<>();
             for(int i=0; i<this.columns.size(); i++){
-                strColumns.add(this.columns.get(i).sql());
+                strColumns.add(this.columns.get(i).sql(dialect));
             }
             strb.append(StringUtils.join(strColumns, ", "));
         }else{
@@ -44,14 +45,14 @@ public class SelectQuery implements SQLBase{
             for(int i=0;i<joins.size();i++){
                 join = joins.get(i);
                 strb.append('\n');
-                strb.append(join.sql());
+                strb.append(join.sql(dialect));
                 strb.append(' ');
             }
         }
         if(where!=null){
             strb.append("WHERE");
             strb.append(' ');
-            strb.append(where.sql());
+            strb.append(where.sql(dialect));
         }
         return strb.toString();
     }

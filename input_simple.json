@@ -27,11 +27,26 @@
     }
   ],
   "where": {
-    "operator": "in",
-    "fieldName": { "table": "employee", "name": "name" },
-    "fieldValue": {
-      "table": "employee",
-      "columns": [{ "name": "name", "table": "employee" }]
-    }
+    "and": [
+      {
+        "operator": "not equal",
+        "fieldName": { "table": "employee", "name": "name" },
+        "fieldValue": "Zee3"
+      },
+      {
+        "operator": "like",
+        "fieldName": { "table": "employee", "name": "name" },
+        "fieldValue": "Zee%"
+      },
+      {
+        "operator": "in",
+        "fieldName": { "table": "employee", "name": "name" },
+        "fieldValue": {
+          "table": "employee",
+          "columns": [{ "name": "name", "table": "employee" }]
+        }
+      }
+    ]
   }
+  
 }

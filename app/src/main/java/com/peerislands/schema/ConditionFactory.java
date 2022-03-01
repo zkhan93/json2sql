@@ -1,6 +1,7 @@
 package com.peerislands.schema;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.peerislands.schema.error.InvalidOperatorException;
 import com.peerislands.schema.error.InvalidValueException;
@@ -8,29 +9,29 @@ import com.peerislands.schema.error.InvalidValueException;
 public class ConditionFactory {
 
     public static Condition<?> create(Column column, String operator, Object value) throws InvalidOperatorException, InvalidValueException {
-        String opSymbol = OperatorType.getSymbol(operator);
+        Operator op = new Operator(operator);
 
         if(value instanceof Column){
-            return new JoinCondition(column, opSymbol, (Column)value);
+            return new JoinCondition(column, op, (Column)value);
         }
-
-        if (opSymbol.equals(Constants.EQ) ||
-                opSymbol.equals(Constants.NEQ) ||
-                opSymbol.equals(Constants.GT) ||
-                opSymbol.equals(Constants.LT) ||
-                opSymbol.equals(Constants.GTE) ||
-                opSymbol.equals(Constants.LTE) ||
-                opSymbol.equals(Constants.LIKE)) {
+        if (Arrays.asList(
+            SchemaConstants.EQ,
+            SchemaConstants.NEQ,
+            SchemaConstants.LT,
+            SchemaConstants.GT,
+            SchemaConstants.GTE,
+            SchemaConstants.LTE,
+            SchemaConstants.LIKE).contains(op.getName())) {
             
-            return new SimpleCondition(column, opSymbol, value);
+            return new SimpleCondition(column, op, value);
 
-        } else if (opSymbol.equals(Constants.IN) ||
-            opSymbol.equals(Constants.NOTIN)) {    
-            return new ListCondition(column, opSymbol, (ArrayList<Object>) value);
+        } else if (op.getName().equals(SchemaConstants.IN) ||
+            op.getName().equals(SchemaConstants.NOTIN)) {    
+            return new ListCondition(column, op, (ArrayList<Object>) value);
             
-        } else if (opSymbol.equals(Constants.BETWEEN)) {
+        } else if (op.getName().equals(SchemaConstants.BETWEEN)) {
 
-            return new BetweenCondition(column, opSymbol, (ArrayList<Object>) value);
+            return new BetweenCondition(column, op, (ArrayList<Object>) value);
         }
         throw new InvalidOperatorException(operator);
     }

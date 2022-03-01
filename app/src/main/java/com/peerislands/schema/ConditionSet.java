@@ -3,6 +3,7 @@ package com.peerislands.schema;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.peerislands.dialect.Dialect;
 import com.peerislands.schema.error.InvalidConditionJoinOpException;
 
 
@@ -14,6 +15,7 @@ public class ConditionSet implements SQLBase{
     private List<ConditionWrapper> items = new ArrayList<>();
 
     public ConditionSet(String joinOp) throws InvalidConditionJoinOpException{
+        
         this.joinOp = cleaned(joinOp);
     }
     
@@ -28,11 +30,11 @@ public class ConditionSet implements SQLBase{
         items.add(whereClause);
     }
 
-    public String sql(){
+    public String sql(Dialect dialect){
         StringBuffer strb = new StringBuffer();
         strb.append('(');
         for (int i=0; i< items.size(); i++){
-            strb.append(items.get(i).sql());
+            strb.append(items.get(i).sql(dialect));
             if (i < items.size() - 1){
                 strb.append(' ');
                 strb.append(this.joinOp);

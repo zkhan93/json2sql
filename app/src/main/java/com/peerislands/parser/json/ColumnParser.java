@@ -3,6 +3,8 @@ package com.peerislands.parser.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.peerislands.parser.BaseParser;
+import com.peerislands.parser.ListParser;
 import com.peerislands.parser.error.InvalidInputException;
 import com.peerislands.schema.Column;
 
@@ -10,9 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ColumnParser{
+public class ColumnParser implements BaseParser<JSONObject, Column>, ListParser<JSONArray, Column>{
 
-    public List<Column> parse(JSONArray items) throws InvalidInputException{
+    public List<Column> parseMany(JSONArray items) throws InvalidInputException{
         ArrayList<Column> columns = new ArrayList<>();
         JSONObject column;
         for (int i = 0; i < items.length(); i++) {
